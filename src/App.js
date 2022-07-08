@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import MainHeader from "components/UI/MainHeader";
 import Quotes from "pages/Quotes";
@@ -11,7 +11,7 @@ import SingleQuote from "pages/SingleQuote";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.login.isLogged);
-
+  console.log(isLoggedIn);
   return (
     <Fragment>
       <header>
@@ -21,7 +21,11 @@ function App() {
         <Container>
           <Switch>
             <Route path="/" exact>
-              <h2>Hi</h2>
+              {isLoggedIn ? (
+                <Redirect to="/quotes" />
+              ) : (
+                <Redirect to="/login" />
+              )}
             </Route>
 
             <Route path="/quotes" exact>
